@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grades for: Chapter 3 Review Review</title>
+    <style>
+        body {
+            background-color: #282c34;
+            color: white;
+            display: flex;
+            flex-direction: column; 
+        }
+
+        .menu {
+            width: 200px;
+            background-color: #3a3f47;
+            padding: 10px;
+            position: absolute;
+            top: 10px; 
+            right: -300px;
+            transition: right 0.3s; 
+            z-index: 1000;
+            font-family: monospace;
+        }
+
+        .menu.active {
+            right: 0;
+        }
+
+        .menu h3 {
+            margin: 0;
+            color: white;
+        }
+
+        .menu-item {
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s;
+        }
+
+        .menu-item:hover {
+            background: #494c54;
+        }
+
+        .toggle-menu {
+            cursor: pointer;
+            padding: 10px;
+            background-color: white;
+            border: none;
+            color: black;
+            transition: background 0.3s;
+            font-family: monospace;
+        }
+
+        .toggle-menu:hover {
+            background: #494c54;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #3a3f47;
+        }
+
+        .buttons button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: grey;
+            color: black;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: monospace;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .rubric-comment-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .scrollpdf {
+            width: 100%;
+            height: 750px; 
+            overflow-y: scroll; 
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .rubric-text {
+            font-family: monospace;
+        }
+
+        .comment-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #3a3f47;
+            flex: 1; 
+        }
+
+        .comment-box {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #494c54;
+            color: white;
+        }
+
+        .align {
+            display: inline-block;
+            margin-right: 5px;
+            font-size: 15px;
+        }
+
+        .monospace {
+            font-family: monospace;
+        }
+
+        ul {
+            list-style: none;
+            display: flex; 
+        }
+
+        li {
+            display: flex; 
+            margin-right: 30px; 
+        }
+
+        li:last-child {
+            margin-right: 0;
+        }
+
+        .comment-section textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            outline: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            resize: none;
+        }
+
+        .comment-section button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: grey;
+            color: black;
+            font-size: 1em;
+            font-family: monospace;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .comment-section button:hover {
+            background: white;
+        }
+
+        .submit button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: grey;
+            color: black;
+            font-size: 1em;
+            width: 200px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit button:hover {
+            background: white;
+        }
+
+        .comment {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-left: 3px solid grey;
+            border-radius: 5px;
+            color: black;
+        }
+
+        .rubric {
+            display: inline-block;
+            flex-direction: column;
+            margin-top: 20px;
+            background-color: #3a3f47;
+            padding: 10px;
+            border-radius: 5px;
+            width: 50%; 
+        }
+
+        .rubric table {
+            width: 100%;
+            max-width: 50%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+
+        .submitbutton {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: grey;
+            color: black;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: monospace;
+            width: 100%;
+            text-align: center;
+        }
+
+        .rubric th, .rubric td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .rubric th {
+            background-color: #4a4e57;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu" id="sideMenu">
+        <h3>Parent Report</h3>
+        <a href="index.html" class="menu-item">Chapter 1 Review</a>
+        <a href="chapter2review.html" class="menu-item">Chapter 2 Review</a>
+        <a href="chapter3review.html" class="menu-item">Chapter 3 Review</a>
+    </div>
+
+    <button class="toggle-menu" id="toggleMenuBtn">Assignments</button>
+
+    <div class="buttons">
+        <button type="button" id="prevBtn">Previous</button>
+        <h3 class="monospace">Derivatives Review</h3>
+        <button type="button" id="nextBtn">Next</button>
+    </div>
+
+    <div class="grid-container">
+        <div class="student">
+            <h3 class="monospace">Student Work:</h3>
+            <div class="scrollpdf">
+                <img id="studentImg" src="https://i.ibb.co/Vt6DRcz/Graphing-based-on-Criteria.jpg">
+            </div>
+        </div>
+        <div class="answerkey">
+            <h3 class="monospace">Answer Key:</h3>
+            <div class="scrollpdf">
+                <img src="https://i.ibb.co/BcKDJMF/Unit-3-Review-missing-Mean-Value-Theorem-KEY.jpg">
+            </div>
+        </div>
+    </div>
+
+    <div class="rubric-comment-container">
+        <div class="rubric">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Criteria</th>
+                        <th>Rating (1-5)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Innovation</td>
+                        <td>
+                            <select id="innovation">
+                                <option value=""></option>
+                                <option value="5">5</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Impact</td>
+                        <td>
+                            <select id="impact">
+                                <option value=""></option>
+                                <option value="5">5</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Originality</td>
+                        <td>
+                            <select id="original">
+                                <option value=""></option>
+                                <option value="5">5</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Functionality</td>
+                        <td>
+                            <select id="functionality">
+                                <option value=""></option>
+                                <option value="5">5</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Design</td>
+                        <td>
+                            <select id="design">
+                                <option value=""></option>
+                                <option value="5">5</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="comment-section">
+            <textarea id="commentBox" rows="3" placeholder="Write a comment..."></textarea>
+            <button id="commentBtn">Comment</button>
+            <div class="comments" id="commentsSection">
+            </div>
+        </div>
+    </div>
+    <button class="submitbutton" type="submit" onclick="submit()">Submit</button>
+
+    <script>
+        function submit() {
+            alert("Scores and comments are now viewable to the student.");
+        }
+
+        const studentData = [
+            {
+                image: 'https://i.ibb.co/Vt6DRcz/Graphing-based-on-Criteria.jpg',
+                rubric: {
+                    innovation: '',
+                    impact: '',
+                    original: '',
+                    functionality: '',
+                    design: ''
+                },
+                comments: []
+            },
+            {
+                image: 'https://i.ibb.co/1dfxLgJ/Curve-Sketching-Practice-1.jpg',
+                rubric: {
+                    innovation: '',
+                    impact: '',
+                    original: '',
+                    functionality: '',
+                    design: ''
+                },
+                comments: []
+            },
+            {
+                image: 'https://i.ibb.co/Jp3ysj7/Asymptote-Practice.jpg',
+                rubric: {
+                    innovation: '',
+                    impact: '',
+                    original: '',
+                    functionality: '',
+                    design: ''
+                },
+                comments: []
+            }
+        ];
+
+        let currentImageIndex = 0;
+
+        function updateStudentImage() {
+            const currentData = studentData[currentImageIndex];
+            document.getElementById('studentImg').src = currentData.image;
+            loadRubricValues(currentData.rubric);
+            loadComments(currentData.comments);
+        }
+
+        function saveRubricValues() {
+            const currentData = studentData[currentImageIndex];
+            currentData.rubric.innovation = document.getElementById('innovation').value;
+            currentData.rubric.impact = document.getElementById('impact').value;
+            currentData.rubric.original = document.getElementById('original').value;
+            currentData.rubric.functionality = document.getElementById('functionality').value;
+            currentData.rubric.design = document.getElementById('design').value;
+        }
+
+        function loadRubricValues(rubric) {
+            document.getElementById('innovation').value = rubric.innovation;
+            document.getElementById('impact').value = rubric.impact;
+            document.getElementById('original').value = rubric.original;
+            document.getElementById('functionality').value = rubric.functionality;
+            document.getElementById('design').value = rubric.design;
+        }
+
+        function loadComments(comments) {
+            const commentsSection = document.getElementById('commentsSection');
+            commentsSection.innerHTML = '';
+            comments.forEach(comment => {
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment';
+                commentDiv.innerText = comment;
+                commentsSection.appendChild(commentDiv);
+            });
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            saveRubricValues();
+            if (currentImageIndex > 0) {
+                currentImageIndex--;
+                updateStudentImage();
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            saveRubricValues();
+            if (currentImageIndex < studentData.length - 1) {
+                currentImageIndex++;
+                updateStudentImage();
+            }
+        });
+
+        document.getElementById('commentBtn').addEventListener('click', () => {
+            const commentBox = document.getElementById('commentBox');
+            const comment = commentBox.value.trim();
+            if (comment) {
+                studentData[currentImageIndex].comments.push(comment);
+                loadComments(studentData[currentImageIndex].comments);
+                commentBox.value = ''; 
+            }
+        });
+
+        document.getElementById('toggleMenuBtn').addEventListener('click', () => {
+            const menu = document.getElementById('sideMenu');
+            menu.classList.toggle('active');
+        });
+
+        updateStudentImage();
+    </script>
+</body>
+</html>
